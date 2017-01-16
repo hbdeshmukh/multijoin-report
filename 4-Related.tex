@@ -1,1 +1,8 @@
 \section{Related Work}
+The database community has paid significant attention to improve join performance in the past decade. 
+Blanas et al.~\cite{DBLP:conf/sigmod/BlanasLP11} analyzed the join performance in single socket, large main-memory server environments using various join implementations such as radix-based partitioning, no-partitioned join and using uniform as well as skewed data sets. 
+
+Schuh et al.~\cite{DBLP:conf/sigmod/SchuhCD16} reviewed various join implementations from the research literature from the past decade. 
+They classified the join algorithms in two categories - partitioning based and no-partitioning based join algorithms, and compared their performance characteristics. 
+As they observed, prior work on join performance has mostly focused on synthetic queries and synthetic datasets. 
+In the interest of discussing the join algorithm performance in the context of real life queries, they measured the performance of various join algorithms on a real query (TPC-H Query 19). 
