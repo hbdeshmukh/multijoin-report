@@ -18,10 +18,10 @@ One example of a right deep pipeline is shown in Figure~\ref{fig:right-deep-pipe
 \begin{figure}[t]
 	\centering
 	\includegraphics[]{figures/right-deep-pipeline.pdf}
-	%	\vspace*{-1.5em}
-	\caption{A right-deep pipeline consisting of three join operations. $Dim_i$ indicates $i^{th}$ dimension table and $Fact$ denotes the fact table in a star-schema.}
+		\vspace*{-1.5em}
+	\caption{\textbf{A right-deep pipeline consisting of three join operations. $Dim_i$ indicates $i^{th}$ dimension table and $Fact$ denotes the fact table in a star-schema.}}
 	\label{fig:right-deep-pipeline}
-	%	\vspace*{-1.5em}
+		\vspace*{-1.5em}
 \end{figure}
 
 An important aspect of the right-deep pipeline in Figure~\ref{fig:right-deep-pipeline} is that the build side in all the join operations is always some dimension table. 
@@ -42,7 +42,7 @@ Our objective is to minimize the execution time of the multi-join pipeline.
 Let us define the execution time of join operation (probe + build phase) $J_i$ as $T(J_i)$, or simply $T_i$. 
 Therefore the objective is to minimize $\sum\limits_{i=1}^{k}T_i$.
 
-Note than if the execution exhibhits pipelined parallelism, the above objective might be incorrect. 
+Note than if the execution exhibits pipelined parallelism, the above objective might be incorrect. 
 In such a case, the total execution time for the pipeline is simply the time difference between end of execution of the last join and beginning of execution of the first join. 
 
 We consider only two options for the partitioning characteristic of the join implementation, i.e. $p(J_i) := \textsc{partition-based}$ or $p(J_i) := \textsc{No partition-based}$. 
@@ -55,7 +55,7 @@ In the next section, we discuss some proposals to solve the above problem.
 We first discuss the parameters involved in this problem. 
 The execution time $T_i$ per join operation $J_i$ consists of both build and probe phases.
 If the join implementation is partitioning-based, then the time to partition (or re-partition)the relations is included in $T_i$.
- 
+
 We use a metric to differentiate the performances of partitioned and non-partitioned probes. 
 This metric is the number of CPU cycles per probing tuple ($C_{probe}$), and it is impacted by the size of the probed hash table $Size_{HT}$. 
 In the two implementations, viz. partitioned and non-partitioned the relationship between $C_{probe}$ and $Size_{HT}$ is different. 
@@ -70,12 +70,12 @@ Finally, we estimate the cost of each join operations in terms of CPU cycles per
 We may use a well known technique such as dynamic programming to solve the assignment problem. 
 
 Note that we restrict ourselves to one form of materialization of the results i.e. eager materialization. 
-This means that each join operation's result is immideately materialized as soon as the operation is complete. 
+This means that each join operation's result is immediately materialized as soon as the operation is complete. 
 (An alternative could be late materialization, as is used by MonetDB.)
 \reminder{Unanswered question: Do assignment change as the query is in progress? e.g. If there are skewed results of the lower join operations in the query plan.}
 
 \subsubsection{Heuristics}
 As described earlier, the total number of possible physical plans is exponential in the number of join operations. 
 It may be prohibitively expensive to analyze all possible plans. 
-Therefore, we can prune the number of joins by certain heuristics. 
-One such heuristic could be: flip-flop between partitioned and non-partitioned joins is not desirable for successive join operations. 
+Therefore, we can prune the number of plans being analyzed, by applying some heuristics.
+Examples of such heuristic could be: flip-flop between partitioned and non-partitioned joins is not desirable for successive join operations, prefer partitioned joins for lower level join operations in a query plan. 

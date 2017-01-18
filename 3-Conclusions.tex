@@ -1,2 +1,7 @@
 \section{Conclusions}
-Conclusions go here. 
+Based on this preliminary analysis, we can draw some conclusions which are described below:%\footnote{Assuming that we trust the benchmark results.} 
+\begin{enumerate}
+	\item{Larger hash tables (size greater than the size of the L3 cache) are not desirable for probe performance.}
+	\item{The CPU cycles per input tuple remains fairly stable for a large spectrum of hash table sizes i.e. Hash table sizes larger than L1 and smaller than L3. An implication of this observation could be that less efforts could be spent in tuning the partition size; as long as the partition size is within the range [L1, L3], the performance will be similar. }
+	\item{Hyper threading adversely affects the probe performance, however the impact is higher for larger hash tables (size greater than 2*L3)}
+\end{enumerate}
